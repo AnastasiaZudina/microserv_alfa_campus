@@ -1,6 +1,9 @@
 @startuml
 class USER {
   +ID: uuid
+  +DELETED: bit
+  +BEGDA: timestamp
+  +ENDDA: timestamp
   +PERS_INFO: USER_PRES_INFO 
   +CONTACTS: USER_CONTACTS
   +PIC: USER_PICS
