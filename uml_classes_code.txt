@@ -12,6 +12,7 @@ class USER_RELATIONS {
   +ID_PREV: uuid
   +ID_NEXT: uuid
   +LNKTYPE: varchar
+  +DELETED: bit
 }
 
 class USER_PERS_INFO {
@@ -58,8 +59,8 @@ class USER_SKILLS{
   +USKILL: varchar
 }
 
-USER_PERS_INFO --* USER
-USER_CONTACTS --* USER
+USER_PERS_INFO --|> USER
+USER_CONTACTS --|> USER
 USER_PICS --* USER
 USER_TEXT --* USER
 USER_SKILLS "n" --* "1" USER
