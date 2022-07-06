@@ -1,0 +1,69 @@
+@startuml
+class USER {
+  +ID: uuid
+  +PERS_INFO: USER_PRES_INFO 
+  +CONTACTS: USER_CONTACTS
+  +PIC: USER_PICS
+  +TEXT: USER_TEXT
+  +SKILLS: USER_SKILLS
+}
+
+class USER_RELATIONS {
+  +ID_PREV: uuid
+  +ID_NEXT: uuid
+  +LNKTYPE: varchar
+}
+
+class USER_PERS_INFO {
+  +ID: uuid
+  +FAM: varchar
+  +NAME: varchar
+  +OTCH: varchar
+  +GENDER: varchar  
+  +DATE_BIRTH: varchar
+  +CITY: varchar
+  +DELETED: bit
+  +BEGDA: timestamp
+  +ENDDA: timestamp
+
+}
+
+class USER_CONTACTS {
+  +ID: uuid
+  +FAM: varchar
+  +NAME: varchar
+  +OTCH: varchar
+  +GENDER: varchar  
+  +DATE_BIRTH: varchar
+  +CITY: varchar
+  +DELETED: bit
+  +BEGDA: timestamp
+  +ENDDA: timestamp
+}
+
+
+class USER_PICS{
+  +ID:uuid
+  +UPIC: varchar
+}
+
+
+class USER_TEXT{
+  +ID:uuid
+  +UTEXT: varchar
+}
+
+class USER_SKILLS{
+  +ID:uuid
+  +USKILL: varchar
+}
+
+USER_PERS_INFO --* USER
+USER_CONTACTS --* USER
+USER_PICS --* USER
+USER_TEXT --* USER
+USER_SKILLS "n" --* "1" USER
+
+USER--> USER_RELATIONS 
+
+@enduml
