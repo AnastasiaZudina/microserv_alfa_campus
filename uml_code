@@ -48,14 +48,12 @@ class USER_CONTACTS {
 
 
 class USER_PICS{
-  +ID:uuid
   +USER_ID: uuid
   +UPIC: varchar
 }
 
 
 class USER_TEXT{
-  +ID:uuid
   +USER_ID: uuid
   +UTEXT: varchar
 }
