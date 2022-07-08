@@ -21,8 +21,8 @@ class USER_RELATIONS {
 }
 
 class USER_PERS_INFO {
-  +ID: uuid
   +USER_ID: uuid
+  +ID: int
   +FAM: varchar
   +NAME: varchar
   +OTCH: varchar
@@ -36,8 +36,8 @@ class USER_PERS_INFO {
 }
 
 class USER_CONTACTS {
-  +ID: uuid
   +USER_ID: uuid
+  +ID: int
   +NICKNAME: varchar
   +PHONE_NUM: varchar
   +MAIL_ADDRESS: varchar
@@ -59,8 +59,8 @@ class USER_TEXT{
 }
 
 class USER_SKILLS{
-  +ID:uuid
   +USER_ID: uuid
+  +ID:int
   +USKILL: varchar
 }
 
