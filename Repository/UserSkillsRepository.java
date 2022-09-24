@@ -10,12 +10,18 @@ import java.util.Optional;
 
 public interface UserSkillsRepository extends CrudRepository<UserSkills, Long> {
 
-        Optional<UserSkills> findByUserIdAndUskill(long userId, String uskill);
+        boolean existsById(long Id);
 
-        List<UserSkills> findAllByUserId(long userId);
+        List<UserSkills> findAllByUserId(Long userId);
 
         List<UserSkills> findAll();
 
         @Transactional
-        void deleteByUserIdAndUskill(long userId, String uskill);
+        void deleteByUserIdAndUskill(Long userId, String uskill);
+
+        Optional<UserSkills> existsByUserId(Long userId);
+
+        boolean existsByUserIdAndUskill(Long userId, String uskill);
+
+        UserSkills findByUserIdAndUskill(Long userId, String uskill);
 }
