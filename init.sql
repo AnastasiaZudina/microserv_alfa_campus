@@ -51,6 +51,7 @@ CREATE TABLE IF NOT EXISTS  users_scheme.UserTexts(
 );
 
 CREATE TABLE IF NOT EXISTS  users_scheme.Subscriptions(
+	Id int PRIMARY KEY NOT NULL,
     UserPrev int NOT NULL,
     UserNext int NOT NULL,
     LKTYPE varchar(6) NOT NULL,
@@ -66,15 +67,6 @@ CREATE TABLE IF NOT EXISTS users_scheme.gender(
 );    
 
 --Ограничения
-ALTER TABLE users_scheme.subcriptions
-    ADD FOREIGN KEY (UserPrev)
-        REFERENCES users_scheme.user(id)
-        ON DELETE NO ACTION;
-        
-ALTER TABLE users_scheme.subcriptions
-    ADD FOREIGN KEY (UserNext)
-        REFERENCES users_scheme.user(id)
-        ON DELETE NO ACTION;
 
 ALTER TABLE users_scheme.userInfo
     ADD FOREIGN KEY (ID)
@@ -121,3 +113,4 @@ ON users_scheme.userContacts (nickname);
 
 CREATE INDEX i_links
 ON users_scheme.subcriptions (UserPrev, lktype);
+
