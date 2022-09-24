@@ -7,34 +7,60 @@ import javax.persistence.*;
 
 @Entity (name="Subscription")
 @Table(name = "Subscriptions")
-@SQLDelete(sql = "UPDATE UserSubscription SET deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE Subscriptions SET deleted = true WHERE id=?")
 @Where(clause = "deleted=false")
 public class Subscription {
 
-    @EmbeddedId
-    private SubscriptionId id;
+    @Id
+    @GeneratedValue(generator = "long")
+
+    @Column (name="ID")
+    private long id;
+
+    @Column(name = "UserPrev")
+    private Long userPrev;
+    @Column(name = "UserNext")
+    private Long userNext;
 
     @Column(name="LkType")
-    private String LkType;
+    private String lkType;
 
     @Column(name="deleted")
     private Boolean deleted = Boolean.FALSE;
 
     //
-    public SubscriptionId getId() {
+
+    public long getId() {
         return id;
     }
 
-    public void setId(SubscriptionId id) {
-        this.id = id;
+
+    public void setLkType() {
+        this.lkType = lkType;
     }
 
     public String getLkType() {
-        return LkType;
+        return lkType;
     }
 
     public boolean getDeleted() {
         return deleted;
+    }
+
+    public Long getUserPrev() {
+        return userPrev;
+    }
+
+    public void setUserPrev(Long userPrev) {
+        this.userPrev = userPrev;
+    }
+
+    public Long getUserNext() {
+        return userNext;
+    }
+
+    public void setUserNext(Long userNext) {
+        this.userNext = userNext;
     }
 
     @PreRemove
@@ -47,17 +73,19 @@ public class Subscription {
     public Subscription(){
     }
 
-    public Subscription(SubscriptionId id, String LkType , boolean deleted) {
-        this.id = id;
-        this.LkType = LkType;
-        this.deleted = deleted;
+    public Subscription(long userPrev,long userNext, String lkType) {
+        this.userPrev = userPrev;
+        this.userNext = userNext;
+        this.lkType = lkType;
     }
 
     @Override
     public String toString() {
-        return "UserSubscription{" +
+        return "Subscription{" +
                 "id=" + id +
-                ", link type=" + LkType +
+                ", prev=" + userPrev +
+                ", next =" + userNext +
+                ", link type=" + lkType +
                 ", deleted=" + deleted +
                 '}';
     }

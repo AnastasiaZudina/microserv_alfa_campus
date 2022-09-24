@@ -20,12 +20,13 @@ public class UserPics {
 
     //
 
-    public long getId() {
+    public long getUserId() {
         return userId;
     }
 
     public String getUpic() {return upic;
     }
+
 
     //конструктор
     public UserPics(){
@@ -43,4 +44,6 @@ public class UserPics {
                 ", upiclink='" + upic + '\'' +
                 '}';
     }
+
+
 }

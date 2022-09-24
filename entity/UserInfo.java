@@ -7,23 +7,23 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table (name="UserInfo")
-@SQLDelete(sql = "UPDATE UserInfo SET deleted = true WHERE id=?")
+@Table (name="USERINFO")
+@SQLDelete(sql = "UPDATE UserInfo SET deleted = true WHERE ID=?")
 @Where(clause = "deleted=false")
 
 public class UserInfo {
 
     @Id
     @GeneratedValue (generator = "long")
-    @Column(name = "id")
+    @Column(name = "ID")
     private long id;
 
 
-    @JoinColumn(name = "userId", insertable =false, updatable =false)
+    @JoinColumn(name = "USERID", insertable =false, updatable =false)
     User ob;
 
     //
-    @Column (name= "userId")
+    @Column (name= "USERID")
     private long userId;
 
     @Column (name= "name")
@@ -79,7 +79,8 @@ public class UserInfo {
         return city;
     }
 
-    public void setDeleted(boolean deleted) {
+    @PreRemove
+    public void setDeleted() {
         this.deleted = deleted;
     }
 
@@ -88,7 +89,7 @@ public class UserInfo {
 
     }
 
-    public UserInfo(Long userId, String name, String fam, String otch, String gender, String birthDate, String city, boolean deleted) {
+    public UserInfo(Long userId, String name, String fam, String otch, String gender, String birthDate, String city) {
         this.userId = userId;
         this.name = name;
         this.fam = fam;
@@ -96,7 +97,6 @@ public class UserInfo {
         this.gender = gender;
         this.birthDate = birthDate;
         this.city = city;
-        this.deleted=deleted;
     }
 
     @Override

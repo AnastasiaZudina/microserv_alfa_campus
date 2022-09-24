@@ -7,12 +7,12 @@ import javax.persistence.*;
 public class UserText {
 
         @OneToOne
-        @JoinColumn(name = "id", insertable =false, updatable =false)
+        @JoinColumn(name = "userId", insertable =false, updatable =false)
         User ob;
 
         //
         @Id
-        @Column (name="id")
+        @Column (name="userId")
         private long id;
 
         @Column (name="utext")
@@ -43,4 +43,6 @@ public class UserText {
                     ", text ='" + utext + '\'' +
                     '}';
         }
-    }
+
+
+}

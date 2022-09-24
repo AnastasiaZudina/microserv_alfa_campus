@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 
 @Entity (name="UserContacts")
-@Table(name = "UserContacts")
+@Table(name = "USERCONTACTS")
 @SQLDelete(sql = "UPDATE UserContacts SET deleted = true WHERE id=?")
 @Where(clause = "deleted=false")
 
@@ -16,7 +16,7 @@ public class UserContacts  {
 
     @Id
     @GeneratedValue(generator = "long")
-    @Column (name= "Id")
+    @Column (name= "ID")
     private long id;
 
 
@@ -58,11 +58,12 @@ public class UserContacts  {
     public String getPhoneNum() {return phoneNum;
     }
 
-    public String getMailAddress() {return mailAddress;
+    public String getMailAddress() {
+        return mailAddress;
     }
 
-
-    public void setDeleted(boolean deleted) {
+    @PreRemove
+    public void setDeleted() {
         this.deleted = deleted;
     }
 

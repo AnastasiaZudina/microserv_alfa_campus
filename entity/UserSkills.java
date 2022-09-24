@@ -5,20 +5,20 @@ import javax.persistence.*;
 @Entity
 @Table(name = "UserSkills")
 public class UserSkills {
-    @ManyToOne (fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId", insertable =false, updatable =false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId", insertable = false, updatable = false)
     User ob;
 
     //
-    @Column(name= "userId")
+    @Column(name = "userId")
     private long userId;
 
     @Column(name = "id")
     @Id
-    @GeneratedValue (generator="long")
+    @GeneratedValue(generator = "long")
     private long id;
 
-    @Column(name= "uSkill")
+    @Column(name = "uSkill")
     private String uskill;
 
 
@@ -28,9 +28,18 @@ public class UserSkills {
         return uskill;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+
     //
 
-    public UserSkills(){
+    public UserSkills() {
     }
 
     public UserSkills(long userId, String uskill) {
@@ -46,4 +55,8 @@ public class UserSkills {
                 ", Skill='" + uskill + '\'' +
                 '}';
     }
+
 }
+
+
+
