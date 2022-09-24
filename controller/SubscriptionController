@@ -1,0 +1,42 @@
+package ru.skillbox.demo.controller;
+
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ru.skillbox.demo.entity.Subscription;
+;
+import ru.skillbox.demo.service.SubscriptionService;
+
+
+@RestController
+@RequestMapping(value="/subscriptions")
+public class SubscriptionController {
+
+    private final SubscriptionService SubscriptionService;
+
+    public SubscriptionController(SubscriptionService SubscriptionService) {
+        this.SubscriptionService = SubscriptionService;
+    }
+
+    @PostMapping
+    String createSubscription (@RequestBody Subscription Subscription){
+        return SubscriptionService.createSubscription(Subscription);
+    }
+
+    @GetMapping
+    Subscription getSubscription(@RequestParam long userPrev, @RequestParam long userNext) {
+        return SubscriptionService.getSubscription(userPrev, userNext);
+    }
+
+    @PutMapping
+    String updateSubscription(@RequestBody Subscription Subscription) {
+        return SubscriptionService.updateSubscription(Subscription);
+    }
+
+    @DeleteMapping
+    String deleteSubscription(@RequestParam long userPrev, @RequestParam long userNext) {
+        return SubscriptionService.deleteSubscription(userPrev,userNext);
+    }
+
+
+
+}
