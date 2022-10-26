@@ -1,0 +1,101 @@
+package ru.skillbox.demo.controller;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+
+import static org.hamcrest.Matchers.equalTo;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@ExtendWith(SpringExtension.class)
+
+public class SubscriptionControllerTest {
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
+    private MockMvc mockMvc;
+
+    @DirtiesContext(classMode= DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+
+    @BeforeEach
+    private void init(){
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    }
+
+
+    @Test
+    void createSubscription() throws Exception {
+
+        String request = "{\"userPrev\":2, \"userNext\":3, \"lkType\":\"follow\"}";
+
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
+                .post ("/subscriptions")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(request));
+
+        resultActions.andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$",
+                        equalTo("Подписка создана")));
+    }
+
+    @Test
+    void getSubscription() throws Exception {
+
+        String userPrev = "2";
+        String userNext = "3";
+
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
+                .get ("/subscriptions")
+                .param("userPrev", userPrev)
+                .param("userNext", userNext));
+
+        resultActions.andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.userPrev").value(userPrev))
+                .andExpect(jsonPath("$.userNext").value(userNext));
+    }
+
+    @Test
+    void updateSubscription() throws Exception {
+
+        String request = "{\"userPrev\":2, \"userNext\":3, \"lkType\":\"ban\"}";
+
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
+                .put ("/subscriptions")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(request));
+
+        resultActions.andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$",
+                        equalTo("Подписка обновлена")));
+    }
+
+    @Test
+    void deleteSubscription() throws Exception {
+
+        String userPrev = "1";
+        String userNext = "3";
+
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
+                .delete ("/subscriptions")
+                .param("userPrev", userPrev)
+                .param("userNext", userNext));
+
+        resultActions.andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$",
+                        equalTo("Подписка удалена")));
+    }
+
+
+}
