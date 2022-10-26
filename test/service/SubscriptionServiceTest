@@ -1,0 +1,122 @@
+package ru.skillbox.demo.service;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.junit4.SpringRunner;
+import ru.skillbox.demo.entity.Subscription;
+import ru.skillbox.demo.entity.User;
+import ru.skillbox.demo.entity.UserContacts;
+import ru.skillbox.demo.repository.SubscriptionRepository;
+import ru.skillbox.demo.repository.UserContactsRepository;
+
+import java.util.Optional;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest()
+public class SubscriptionServiceTest {
+
+    private Long userPrev;
+    private Long userNext;
+    private String lkType;
+    private Subscription subscription;
+
+    @Autowired
+    @InjectMocks
+    private SubscriptionService SubscriptionService;
+
+    @Mock
+    private SubscriptionRepository SubscriptionRepository;
+
+    @DirtiesContext(classMode= DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+
+    @BeforeEach
+    void setUp(){
+        userPrev = 1L;
+
+        lkType= "follow";
+
+    }
+
+    @Test
+    void createSubscriptionSuccess() {
+
+        userNext = 2L;
+
+        //given
+        subscription = new Subscription( userPrev, userNext, lkType);
+        Subscription subscription2 = new Subscription(userPrev, userNext, lkType);
+        Mockito.when(SubscriptionRepository.save(subscription)).thenReturn(subscription2);
+
+        //when
+        String result = SubscriptionService.createSubscription(subscription);
+
+        //then
+        Assertions.assertEquals(String.format("Подписка создана"), result);
+
+    }
+
+    @Test
+    void getSubscriptionSuccess() {
+
+        userNext = 3L;
+        subscription = new Subscription( userPrev, userNext, lkType);
+
+        //given
+        Mockito.when(SubscriptionRepository.findByUserPrevAndUserNext(userPrev, userNext)).thenReturn(Optional.of(subscription));
+
+        //when
+        Long idPrev = SubscriptionService.getSubscription(userPrev, userNext).getUserPrev();
+        Long idNext = SubscriptionService.getSubscription(userPrev, userNext).getUserNext();
+
+        //then
+        Assertions.assertEquals(userPrev, idPrev);
+        Assertions.assertEquals(userNext, idNext);
+
+    }
+
+    @Test
+    void updateSubscriptionSuccess(){
+
+        lkType = "ban";
+        userNext = 3L;
+        subscription = new Subscription( userPrev, userNext, lkType);
+
+        //given
+        Mockito.when(SubscriptionRepository.findByUserPrevAndUserNext(userPrev, userNext)).thenReturn(Optional.of(subscription));
+
+        //when
+        String result = SubscriptionService.updateSubscription(subscription);
+
+        //then
+        Assertions.assertEquals("Подписка обновлена", result);
+
+    }
+
+    @Test
+    void deleteSubscriptionSuccess(){
+
+        userNext = 3L;
+        subscription = new Subscription( userPrev, userNext, lkType);
+
+        //given
+        Mockito.when(SubscriptionRepository.findByUserPrevAndUserNext(userPrev, userNext)).thenReturn(Optional.of(subscription));
+
+        //when
+        String result = SubscriptionService.deleteSubscription(userPrev, userNext);
+
+        //then
+        Assertions.assertEquals("Подписка удалена", result);
+
+    }
+
+
+
+}
