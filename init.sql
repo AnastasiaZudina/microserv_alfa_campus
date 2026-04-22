@@ -117,3 +117,9 @@ ON users.userContacts (nickname);
 CREATE INDEX i_links
 ON users.subcriptions (UserPrev, lktype);
 
+
+CREATE ROLE anon NOINHERIT;
+GRANT anno TO authenticator;
+-- Настройте права для роли anon на нужные таблицы
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO anon;
+
